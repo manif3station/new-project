@@ -1,0 +1,3 @@
+[submodule "src/plugins/web-plugins"]
+	path = src/plugins/web-plugins
+	url = https://github.com/manif3station/web-plugins.git

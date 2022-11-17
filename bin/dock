@@ -1,0 +1,52 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use FindBin '$Bin';
+
+chdir "$Bin/..";
+
+my $order = 1;
+
+mkdir '.enabled' if !-d '.enabled';
+
+my %enabled = map { $_ => $order++ } map { /.*\/(.*)/; $1 } split /\n/,
+  qx(find .enabled -type f);
+
+$enabled{'base.yml'} = 0;
+
+my %features = map { /.*\/(.*)/; ( $1 => $_ ) } split /\n/,
+  qx{find . -type d -name docker-compose -exec find {} -type f -name *.yml \\;};
+
+if ( grep { /--enable/ } @ARGV ) {
+    my ( undef, $service ) = @ARGV;
+    $service .= '.yml' if $service !~ m/yml$/;
+    die "Unknown services\n"
+      if !$features{$service};
+    exec touch => ".enabled/$service";
+}
+
+if ( grep { /--disable/ } @ARGV ) {
+    my ( undef, $service ) = @ARGV;
+    $service .= '.yml' if $service !~ m/yml$/;
+    unlink ".enabled/$service";
+    exit;
+}
+
+if ( grep { /--list/ } @ARGV ) {
+    printf "%s\n", join "\n",
+      map { ( exists $enabled{$_} ? '[+]' : '[-]' ) . " $_" }
+      sort keys %features;
+    exit;
+}
+
+my @enabled = map { -f => $features{$_} }
+  sort { $enabled{$a} <=> $enabled{$b} }
+  grep { exists $enabled{$_} } keys %features;
+
+my @cmd = ( 'docker-compose', @enabled, @ARGV );
+
+printf ">>> %s\n", join ' ', @cmd if $ENV{VERBOSE};
+
+exec @cmd;

@@ -1,0 +1,7 @@
+#!/usr/bin/env perl
+
+use FindBin '$Bin';
+
+my ($cmd, @args) = @ARGV or exit;
+
+exec "$Bin/$cmd", @args;

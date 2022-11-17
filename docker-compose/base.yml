@@ -1,10 +1,12 @@
 version: '3.7'
 services:
     web:
-        build: .
+        build:
+            context: ..
+            dockerfile: Dockerfiles/base/Dockerfile
         init: true
         working_dir: /app/src
         volumes:
-            - ./src:/app/src
+            - ../src:/app/src
         environment:
             KEEP_RUN_WEB: starman --max-requests=1 --preload-app --listen=:80 --workers=2 bin/app.psgi
