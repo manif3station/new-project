@@ -1,7 +1,0 @@
-version: '3.7'
-services:
-    web:
-        environment:
-            IF_KEEP_RUN_WEB: '00'
-            RUN: perl -d $(which plackup) --port 00 bin/app.psgi
-

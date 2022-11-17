@@ -1,0 +1,28 @@
+[submodule "perl-base"]
+	path = src/plugins/perl-base
+	url = https://github.com/manif3station/perl-base
+	branch = master
+[submodule "web-plugins"]
+	path = src/plugins/web-plugins
+	url = https://github.com/manif3station/web-plugins
+    branch = master
+[submodule "web-debug"]
+	path = src/plugins/web-debug
+	url = https://github.com/manif3station/web-debug
+    branch = master
+[submodule "web-template-layouts"]
+	path = src/plugins/web-template-layouts
+	url = https://github.com/manif3station/web-template-layouts
+    branch = master
+[submodule "web-docker"]
+	path = src/plugins/web-docker
+	url = https://github.com/manif3station/web-docker
+    branch = master
+[submodule "web-cli"]
+	path = src/plugins/web-cli
+	url = https://github.com/manif3station/web-cli
+	branch = master
+[submodule "web-env"]
+	path = src/plugins/web-env
+	url = https://github.com/manif3station/web-env
+	branch = master
